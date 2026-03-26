@@ -39,3 +39,13 @@ html {
 		border-right-color: var(--border);
 	}
 }
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.login-buttons {
+	display: flex;
+	justify-content: space-between;
+}

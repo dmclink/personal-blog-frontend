@@ -11,8 +11,12 @@ import { PostSummariesProvider } from './contexts/PostSummariesContext.jsx';
 import { useAuth } from './contexts/AuthContext.jsx';
 
 function App() {
-	const [count, setCount] = useState(0);
 	const { user, logout } = useAuth();
+	const [isLoginMenuOpened, setIsLoginMenuOpened] = useState(false);
+
+	const openLoginMenu = () => {
+		setIsLoginMenuOpened(true);
+	};
 
 	return (
 		<>
@@ -27,9 +31,14 @@ function App() {
 							Logout
 						</button>
 					</div>
+				) : isLoginMenuOpened ? (
+					<Login />
 				) : (
 					<div>
-						Not logged in yet. <Link to="/login">Login</Link>
+						<a href="#" onClick={setIsLoginMenuOpened}>
+							Login
+						</a>{' '}
+						or <Link to="/register">Register</Link> to comment on posts
 					</div>
 				)}
 			</header>

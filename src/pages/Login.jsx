@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-function Login(props) {
+function Login() {
 	const { user, login, error: loginError } = useAuth();
 	const navigate = useNavigate();
 
@@ -13,9 +13,10 @@ function Login(props) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const success = await login(username, password);
-		console.log(success);
 		if (success) {
 			navigate('/home');
+		} else {
+			alert('incorrect username or password');
 		}
 	};
 
@@ -24,23 +25,21 @@ function Login(props) {
 			{user && user.isLoggedIn() ? (
 				<p>You're already logged in!</p>
 			) : (
-				<form onSubmit={handleSubmit}>
+				<form className="login-form" onSubmit={handleSubmit}>
 					<label>
-						Username:
-						<input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
+						Username: <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
 					</label>
 					<label>
-						Password:
+						Password:{' '}
 						<input type="password" name="current-password" onChange={(e) => setPassword(e.target.value)} />
 					</label>
 					{loginError && <p className="error-messaage">{loginError}</p>}
-					<button type="submit">Login</button>
+					<div className="login-buttons">
+						<Link to="/register">Register</Link>
+						<button type="submit">Login</button>
+					</div>
 				</form>
 			)}
-
-			<p>
-				Back to view all <Link to="/home">posts</Link>
-			</p>
 		</section>
 	);
 }

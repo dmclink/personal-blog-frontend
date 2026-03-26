@@ -35,8 +35,8 @@ function CommentForm(props) {
 
 	return (
 		<>
-			{canComment ? (
-				isWritingComment ? (
+			{canComment &&
+				(isWritingComment ? (
 					<>
 						<form>
 							<textarea ref={commentTextAreaRef} cols="60" rows="5"></textarea>
@@ -48,10 +48,7 @@ function CommentForm(props) {
 					</>
 				) : (
 					<button onClick={toggleIsWriting}>Comment</button>
-				)
-			) : (
-				<p>must be logged in to comment</p>
-			)}
+				))}
 		</>
 	);
 }
