@@ -4,7 +4,8 @@ import usePost from '../hooks/usePost';
 import Login from './Login';
 
 function CommentForm(props) {
-	const [comment, setComment] = useState('');
+	const [isWritingComment, setIsWritingComment] = useState(false);
+	const [postError, setPostError] = useState(null);
 
 	const commentTextAreaRef = useRef(null);
 
@@ -15,31 +16,39 @@ function CommentForm(props) {
 
 	const { postData, error, isLoading, data } = usePost('/comments/create');
 
-	//TODO: pass some shit down through props so we can submit this form ?
-	//call in usePost and write a handler
-	//
+	const toggleIsWriting = () => {
+		setIsWritingComment((prev) => !prev);
+	};
 
 	const handleClick = async (e) => {
 		e.preventDefault();
 		try {
 			const respData = await postData({ post_id: props.postId, content: commentTextAreaRef.current.value });
-			console.log('Comment added:', respData);
-			console.log('Refreshing post');
 			props.refreshPost();
+			toggleIsWriting();
+			setPostError(null);
 		} catch (err) {
 			console.error(err);
+			setPostError(err.message);
 		}
 	};
 
 	return (
 		<>
 			{canComment ? (
-				<form>
-					<textarea ref={commentTextAreaRef} cols="60" rows="5"></textarea>
-					<button type="button" onClick={handleClick}>
-						Add Comment
-					</button>
-				</form>
+				isWritingComment ? (
+					<>
+						<form>
+							<textarea ref={commentTextAreaRef} cols="60" rows="5"></textarea>
+							<button type="button" onClick={handleClick}>
+								Add Comment
+							</button>
+						</form>
+						{postError && <p className="error-message">{postError}</p>}
+					</>
+				) : (
+					<button onClick={toggleIsWriting}>Comment</button>
+				)
 			) : (
 				<p>must be logged in to comment</p>
 			)}
