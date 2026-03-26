@@ -1,12 +1,18 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePostSummariesContext } from '../contexts/PostSummariesContext.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
+
+import { formatDateString } from '../lib/stringUtils.js';
 
 import useFetch from '../hooks/useFetch.js';
 
+import CommentSection from './CommentSection.jsx';
+
 function Post(props) {
-	const context = usePostSummariesContext();
 	const { postId } = useParams();
-	const postHeader = context.posts && context.posts.get(Number(postId));
+	const postsContext = usePostSummariesContext();
+	const postHeader = postsContext.posts && postsContext.posts.get(Number(postId));
 
 	const endpoint = '/posts/view/' + postId;
 	const { data: postResp, isLoading, error, refreshData: refreshPost } = useFetch(endpoint);
@@ -17,18 +23,18 @@ function Post(props) {
 			{postHeader && (
 				<header>
 					<h1>{postHeader.title}</h1>
-					<p>Created: {postHeader.created_at}</p>
+					<p>Created: {formatDateString(postHeader.created_at)}</p>
 				</header>
 			)}
 			<div className="ticks"></div>
 			<section id="spacer"></section>
 			{post && (
 				<div>
-					<p>Last Updated: {post.updated_at}</p>
+					<p>Last Updated: {formatDateString(post.updated_at)}</p>
 					<p>{post.content}</p>
-					<p>{post.comments}</p>
 				</div>
 			)}
+			<CommentSection comments={post && post.comments} postId={postId} refreshPost={refreshPost} />
 			{isLoading && <p>fetching posts...</p>}
 			{error && <p className="error-message">{error}</p>}
 			<footer>
