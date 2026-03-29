@@ -90,6 +90,9 @@ body {
 
 .comment header {
 	border-bottom: 1px solid var(--border);
+	display: flex;
+	gap: 2rem;
+	justify-content: space-between;
 }
 
 .add-comment-form {
