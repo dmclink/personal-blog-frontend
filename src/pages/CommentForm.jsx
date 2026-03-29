@@ -22,6 +22,11 @@ function CommentForm(props) {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
+		if (e.target.value === '') {
+			setPostError('no empty comments! try typing something before submitting');
+			return;
+		}
+
 		try {
 			await postData({ post_id: props.postId, content: commentTextAreaRef.current.value });
 			props.refreshPost();
@@ -51,7 +56,9 @@ function CommentForm(props) {
 						Comment
 					</button>
 				))}
-			{!canComment && <p>You must verify your email to comment. Check your inbox</p>}
+			{!canComment && (
+				<p className="comments-verify-cta">You must verify your email to comment. Check your inbox</p>
+			)}
 		</>
 	);
 }

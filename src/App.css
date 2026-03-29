@@ -1,7 +1,7 @@
 body {
+	border: ridge 20px rgba(0, 0, 0, 0.4);
 	min-height: 100vh;
 	padding: 2rem;
-	border: ridge 20px rgba(0, 0, 0, 0.4);
 	display: flex;
 	flex-direction: column;
 }
@@ -113,4 +113,17 @@ body {
 
 .add-comment-btn {
 	align-self: center;
+	margin-bottom: 1rem;
+}
+
+.error-message {
+	color: red;
+	text-shadow:
+		0 0 3px black,
+		0 0 5px red;
+	margin-bottom: 1rem;
+}
+
+.comments-verify-cta {
+	margin-bottom: 1rem;
 }
