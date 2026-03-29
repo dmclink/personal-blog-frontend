@@ -49,6 +49,7 @@ function CommentForm(props) {
 				) : (
 					<button onClick={toggleIsWriting}>Comment</button>
 				))}
+			{!canComment && <p>You must verify your email to comment. Check your inbox</p>}
 		</>
 	);
 }

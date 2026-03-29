@@ -10,11 +10,12 @@ function AuthProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [error, setError] = useState(null);
 
-	const { postData, data, isLoading, error: loginError } = usePost('/auth/login');
+	const { postData: postLogin, error: loginError } = usePost('/auth/login');
+	const { postData: postRegister, error: registerError } = usePost('/auth/register');
 
 	const login = async (username, password) => {
 		try {
-			const result = await postData({ username, password });
+			const result = await postLogin({ username, password });
 			const respToken = result && result.token;
 			const respData = jwtDecode(respToken);
 
@@ -24,6 +25,7 @@ function AuthProvider({ children }) {
 				canPost: respData.can_post,
 				canComment: respData.email_verified,
 				admin: respData.admin,
+				verificationEmailLastSent: respData.email_sent_at,
 				isLoggedIn: () => {
 					return new Date() < new Date(Number(respData.exp) * 1000);
 				},
@@ -39,13 +41,63 @@ function AuthProvider({ children }) {
 		}
 	};
 
+	const register = async (username, email, password) => {
+		try {
+			const result = await postRegister({ username, email, password });
+			const respToken = result && result.token;
+			const respData = jwtDecode(respToken);
+
+			setUser({
+				username,
+				expiration: respData.exp,
+				canPost: respData.can_post,
+				canComment: respData.email_verified,
+				admin: respData.admin,
+				verificationEmailLastSent: respData.email_sent_at,
+				isLoggedIn: () => {
+					return new Date() < new Date(Number(respData.exp) * 1000);
+				},
+			});
+			setError(null);
+
+			axios.defaults.headers.common['Authorization'] = respToken;
+
+			return true;
+		} catch (err) {
+			console.error(err);
+			throw err;
+		}
+	};
+
+	const sendVerificationEmail = async () => {
+		try {
+			if (!user.isLoggedIn()) {
+				throw new Error('user not logged in');
+			}
+			if (user.canComment) {
+				throw new Error('user is already verified');
+			}
+
+			const resp = await axios.get('/auth/verify-email');
+
+			return resp;
+		} catch (err) {
+			console.error(err);
+			throw err;
+		}
+	};
+
 	const logout = () => {
 		setError(null);
 		setUser(null);
 		delete axios.defaults.headers.common['Authorization'];
 	};
 
-	return <AuthContext.Provider value={{ user, error, login, logout }}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={{ user, error, login, logout, register, sendVerificationEmail }}>
+			{children}
+		</AuthContext.Provider>
+	);
 }
 
 function useAuth() {

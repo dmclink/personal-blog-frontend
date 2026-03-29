@@ -22,7 +22,9 @@ function usePost(endpoint) {
 				}
 
 				if (resp.data.success === false) {
-					throw new Error('Your inputs are probably wrong, try again');
+					const errorMessage = resp.data.error.message;
+
+					throw new Error(errorMessage);
 				}
 
 				const respData = resp.data;
@@ -31,7 +33,7 @@ function usePost(endpoint) {
 			} catch (err) {
 				console.error(err);
 				setError(err.message);
-				return null;
+				throw err;
 			} finally {
 				setIsLoading(false);
 			}

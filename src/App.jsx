@@ -6,6 +6,7 @@ import Landing from './pages/Landing.jsx';
 import Home from './pages/Home.jsx';
 import Post from './pages/Post.jsx';
 import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
 
 import { PostSummariesProvider } from './contexts/PostSummariesContext.jsx';
 import { useAuth } from './contexts/AuthContext.jsx';
@@ -16,6 +17,9 @@ function App() {
 
 	const openLoginMenu = () => {
 		setIsLoginMenuOpened(true);
+	};
+	const closeLoginMenu = () => {
+		setIsLoginMenuOpened(false);
 	};
 
 	return (
@@ -30,12 +34,14 @@ function App() {
 						<button type="button" onClick={logout}>
 							Logout
 						</button>
+
+						{user.canComment ? null : <Link to="/register">Register</Link>}
 					</div>
 				) : isLoginMenuOpened ? (
 					<Login />
 				) : (
 					<div>
-						<a href="#" onClick={setIsLoginMenuOpened}>
+						<a href="#" onClick={openLoginMenu}>
 							Login
 						</a>{' '}
 						or <Link to="/register">Register</Link> to comment on posts
@@ -49,6 +55,7 @@ function App() {
 					<Route path="/home" element={<Home />}></Route>
 					<Route path="/post/:postId" element={<Post />}></Route>
 					<Route path="/login" element={<Login />}></Route>
+					<Route path="/register" closeLoginMenu={closeLoginMenu} element={<Register />}></Route>
 				</Routes>
 			</PostSummariesProvider>
 		</>
