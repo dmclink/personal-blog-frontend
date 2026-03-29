@@ -19,7 +19,7 @@ function Home() {
 						<Link key={id} to={'/post/' + id}>
 							<div className="post-link">
 								<p>{post.title || 'Entry #' + id}</p>
-								<p>{formatDateString(post.created_at)}</p>
+								<p className="post-link-date">{formatDateString(post.created_at)}</p>
 							</div>
 						</Link>
 					))

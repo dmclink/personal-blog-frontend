@@ -23,7 +23,7 @@ function App() {
 	};
 
 	return (
-		<>
+		<div className="app-container">
 			<header className="header">
 				<Link to="/home">
 					<h1>dmclink's Blog</h1>
@@ -58,7 +58,7 @@ function App() {
 					<Route path="/register" closeLoginMenu={closeLoginMenu} element={<Register />}></Route>
 				</Routes>
 			</PostSummariesProvider>
-		</>
+		</div>
 	);
 }
 

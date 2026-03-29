@@ -13,6 +13,12 @@ body {
 	flex-grow: 1;
 }
 
+.app-container {
+	width: 100%;
+	max-width: 80ch;
+	margin: 0 auto;
+}
+
 .header {
 	display: flex;
 	justify-content: space-between;
@@ -50,6 +56,10 @@ body {
 	font-size: 1.2rem;
 }
 
+.post-link-date {
+	white-space: nowrap;
+}
+
 .post-header {
 	background-color: var(--block-bg);
 	border-bottom: 1px solid var(--border);
@@ -61,7 +71,43 @@ body {
 	padding: 1rem;
 }
 
+.post-comments-section {
+	margin-bottom: 1rem;
+}
+
 .post footer {
 	position: absolute;
 	bottom: 0;
+}
+
+.comments-list {
+	margin-bottom: 1rem;
+}
+
+.comment {
+	margin-bottom: 0.4rem;
+}
+
+.comment header {
+	border-bottom: 1px solid var(--border);
+}
+
+.add-comment-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.add-comment-form textarea {
+	border: 1px solid var(--border);
+	resize: none;
+}
+
+.comment-btn {
+	display: block;
+	margin: 0 auto;
+}
+
+.add-comment-btn {
+	align-self: center;
 }

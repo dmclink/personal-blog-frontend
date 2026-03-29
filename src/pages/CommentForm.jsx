@@ -38,16 +38,18 @@ function CommentForm(props) {
 			{canComment &&
 				(isWritingComment ? (
 					<>
-						<form>
+						<form className="add-comment-form">
 							<textarea ref={commentTextAreaRef} cols="60" rows="5"></textarea>
-							<button type="button" onClick={handleClick}>
+							<button className="add-comment-btn" type="button" onClick={handleClick}>
 								Add Comment
 							</button>
 						</form>
 						{postError && <p className="error-message">{postError}</p>}
 					</>
 				) : (
-					<button onClick={toggleIsWriting}>Comment</button>
+					<button className="comment-btn" onClick={toggleIsWriting}>
+						Comment
+					</button>
 				))}
 			{!canComment && <p>You must verify your email to comment. Check your inbox</p>}
 		</>
