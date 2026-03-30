@@ -56,7 +56,7 @@ function CommentForm(props) {
 						Comment
 					</button>
 				))}
-			{!canComment && (
+			{user && !canComment && (
 				<p className="comments-verify-cta">You must verify your email to comment. Check your inbox</p>
 			)}
 		</>

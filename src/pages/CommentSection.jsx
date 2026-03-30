@@ -12,7 +12,7 @@ function CommentSection({ postId, comments, refreshPost }) {
 					))}
 				</div>
 			) : (
-				<div>No comments yet, why don't you add some?</div>
+				<div className="no-comments">No comments yet, why don't you add some?</div>
 			)}
 			<CommentForm postId={postId} refreshPost={refreshPost} />
 		</section>

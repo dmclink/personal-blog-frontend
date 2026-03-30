@@ -147,3 +147,6 @@ input {
 .write-content-label {
 	flex-grow: 1;
 }
+.no-comments {
+	margin-bottom: 1rem;
+}
