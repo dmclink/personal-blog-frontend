@@ -12,6 +12,22 @@ body {
 	flex-direction: column;
 }
 
+button {
+	padding: 0.2rem 0.4rem;
+	border: 1px solid var(--text);
+}
+
+.header a {
+	display: block;
+	color: var(--text);
+	padding: 0.2rem 0.4rem;
+	border: 1px solid var(--text);
+	text-decoration: none;
+	&:visited {
+		color: var(--text);
+	}
+}
+
 .app-container {
 	width: 100%;
 	max-width: 80ch;
