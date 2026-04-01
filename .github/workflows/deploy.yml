@@ -21,9 +21,11 @@ jobs:
         env: 
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
-      - name: Confirm secret exists
+      - name: Verify environment variable
         run: |
           echo "API URL: $VITE_API_BASE_URL"
+          echo "API URL SECRET: ${{secrets.VITE_API_BASEURL}}"
+          echo "API URL VARIABLE: ${{vars.VITE_API_BASEURL}}"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
