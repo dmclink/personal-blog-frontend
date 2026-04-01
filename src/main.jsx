@@ -8,7 +8,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
-		<BrowserRouter basename={import.meta.env.BASE_URL || '/blog'}>
+		<BrowserRouter basename={'/blog'}>
 			<AuthProvider>
 				<App />
 			</AuthProvider>
