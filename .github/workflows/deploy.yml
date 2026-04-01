@@ -4,6 +4,9 @@ on:
     branches:
       - main
 
+env:
+  VITE_API_BASE_URL: ${{vars.VITE_API_BASE_URL}}
+
 jobs:
   build-and-deploy:
     environment: 
@@ -19,7 +22,7 @@ jobs:
       - name: Build
         run: npm run build
         env: 
-          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
 
       - name: Verify environment variable
         run: |
