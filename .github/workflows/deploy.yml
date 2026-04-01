@@ -21,4 +21,4 @@ jobs:
         with:
           publish_branch: gh-pages
           publish_dir: ./dist
-          token: ${{ secrets.ACCESS_TOKEN }}
+          github_token: ${{ secrets.ACCESS_TOKEN }}
